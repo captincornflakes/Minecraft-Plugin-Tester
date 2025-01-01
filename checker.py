@@ -117,6 +117,18 @@ class CustomApp:
         self.feedback_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         self.feedback_text.config(state=tk.DISABLED)
 
+        """Creates the jars and test folders if they don't already exist."""
+        try:
+            if not os.path.exists(self.jars_folder):
+                os.makedirs(self.jars_folder)
+                self.log_feedback(f"Created missing folder: {self.jars_folder}")
+
+            if not os.path.exists(self.test_folder):
+                os.makedirs(self.test_folder)
+                self.log_feedback(f"Created missing folder: {self.test_folder}")
+        except Exception as e:
+            self.log_feedback(f"Error creating initial folders: {e}")
+            
     def log_feedback(self, message):
         """Log feedback messages to the text area."""
         self.feedback_text.config(state=tk.NORMAL)
