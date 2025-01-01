@@ -161,3 +161,4 @@ cython_debug/
 *.jar
 test_output_log.txt
 output.json
+/test

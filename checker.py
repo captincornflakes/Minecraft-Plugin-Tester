@@ -13,13 +13,23 @@ class CustomApp:
         self.root.geometry("1000x700")
 
         # Dark Mode Configuration
-        self.bg_color = "#343a40"  # Dark background color (Bootstrap dark)
-        self.fg_color = "#f8f9fa"  # Light foreground color for text
-        self.button_color = "#007bff"  # Blue button color (Bootstrap)
-        self.button_hover_color = "#0056b3"  # Button hover color
-        self.entry_bg_color = "#495057"  # Dark background for entry fields
-        self.entry_fg_color = "#f8f9fa"  # Light text color for entry fields
-
+        self.bg_color = "#343a40" 
+        self.fg_color = "#f8f9fa"
+        self.button_color_jars = "#007bff"  
+        self.button_color_jars_active = "#007bff"  
+        self.button_color_start_test = "#007bff"
+        self.button_color_start_test_active = "#007bff"
+        self.button_color_start_server = "#0f4d0f"
+        self.button_color_start_server_active = "#0f4d0f"
+        self.button_color_start_server_running = "#FF0000"
+        self.button_color_next_test = "#007bff"
+        self.button_color_next_test_active = "#007bff"
+        self.button_color_geneerate_log = "#218838"
+        self.button_color_geneerate_log_active = "#218838"
+        self.button_color_status = "#ccffcc"
+        self.button_color_status_active = "#ccffcc"
+        self.entry_bg_color = "#495057"
+        self.entry_fg_color = "#f8f9fa"
         # Directories
         self.jars_folder = "jars"
         self.test_folder = "test"
@@ -41,27 +51,43 @@ class CustomApp:
         button_frame.pack(pady=10)
 
         # Buttons
-        self.generate_button = tk.Button(button_frame, text="Load Jars", command=self.scan_and_generate,
-                                          bg=self.button_color, fg=self.fg_color, activebackground=self.button_hover_color)
+        self.generate_button = tk.Button(button_frame,
+                                         text="Load Jars", 
+                                         command=self.scan_and_generate,
+                                          bg=self.button_color_jars, 
+                                          fg=self.fg_color, 
+                                          activebackground=self.button_color_jars_active)
         self.generate_button.pack(side=tk.LEFT, padx=5)
 
-        self.start_test_button = tk.Button(button_frame, text="Start Test", command=self.start_test,
-                                           bg=self.button_color, fg=self.fg_color, activebackground=self.button_hover_color)
+        self.start_test_button = tk.Button(button_frame, text="Start Test", 
+                                           command=self.start_test,
+                                           bg=self.button_color_start_test, 
+                                           fg=self.fg_color, 
+                                           activebackground=self.button_color_start_test_active)
         self.start_test_button.pack(side=tk.LEFT, padx=5)
 
-        self.start_server_button = tk.Button(button_frame, text="Start Server", command=self.start_server,
-                                             bg=self.button_color, fg=self.fg_color, activebackground=self.button_hover_color)
+        self.start_server_button = tk.Button(button_frame, text="Start Server", 
+                                             command=self.start_server,
+                                             bg=self.button_color_start_server, 
+                                             fg=self.fg_color, 
+                                             activebackground=self.button_color_start_server_active)
         self.start_server_button.pack(side=tk.LEFT, padx=5)
 
-        self.next_test_button = tk.Button(button_frame, text="Next Test", command=self.next_test,
-                                          bg=self.button_color, fg=self.fg_color, activebackground=self.button_hover_color)
+
+        self.next_test_button = tk.Button(button_frame, text="Next Test", 
+                                          command=self.next_test,
+                                          bg=self.button_color_next_test, 
+                                          fg=self.fg_color, 
+                                          activebackground=self.button_color_next_test_active)
         self.next_test_button.pack(side=tk.LEFT, padx=5)
 
-        self.generate_log_button = tk.Button(button_frame, text="Generate Log", command=self.generate_log,
-                                             bg="#28a745", fg="#fff", activebackground="#218838")
+        self.generate_log_button = tk.Button(button_frame, text="Generate Log", 
+                                             command=self.generate_log,
+                                             bg=self.button_color_geneerate_log, 
+                                             fg=self.fg_color, 
+                                             activebackground=self.button_color_geneerate_log_active)
         self.generate_log_button.pack(side=tk.LEFT, padx=5)
 
-       
         # Progress Meter
         progress_frame = tk.Frame(root)
         progress_frame.pack(pady=10)
@@ -72,7 +98,6 @@ class CustomApp:
         self.progress_bar = ttk.Progressbar(progress_frame, orient="horizontal", length=300, mode="determinate")
         self.progress_bar.pack(side=tk.LEFT, padx=5)
 
-
         # Pass/Fail Group
         pass_fail_frame = tk.Frame(root, bg=self.bg_color)
         pass_fail_frame.pack(pady=5)
@@ -81,8 +106,12 @@ class CustomApp:
         self.pass_fail_label.pack(side=tk.LEFT, padx=5)
 
         self.pass_fail_var = tk.StringVar(value="Pending")
-        self.pass_fail_combobox = ttk.Combobox(pass_fail_frame, textvariable=self.pass_fail_var,
-                                               values=["Pass", "Fail", "Pending"])
+        self.pass_fail_combobox = ttk.Combobox(
+            pass_fail_frame,
+            textvariable=self.pass_fail_var,
+            values=["Pass", "Fail", "Pending"],
+            state="readonly"
+        )
         self.pass_fail_combobox.pack(side=tk.LEFT, padx=5)
 
         # Notes Group
@@ -95,8 +124,11 @@ class CustomApp:
         self.notes_entry = tk.Entry(notes_frame, width=50, bg=self.entry_bg_color, fg=self.entry_fg_color)
         self.notes_entry.pack(side=tk.LEFT, padx=5)
 
-        self.update_status_button = tk.Button(notes_frame, text="Update Status", command=self.update_status,
-                                              bg=self.button_color, fg=self.fg_color, activebackground=self.button_hover_color)
+        self.update_status_button = tk.Button(notes_frame, text="Update Status", 
+                                              command=self.update_status,
+                                              bg=self.button_color_status, 
+                                              fg=self.fg_color, 
+                                              activebackground=self.button_color_status_active)
         self.update_status_button.pack(side=tk.LEFT, padx=5)
 
         # Table for JSON Data
@@ -109,7 +141,6 @@ class CustomApp:
         self.table.column("Notes", width=200)
         self.table.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        # Feedback Area
         feedback_frame = tk.Frame(root, bg=self.bg_color)
         feedback_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
@@ -141,13 +172,10 @@ class CustomApp:
         try:
             if not os.path.exists(self.jars_folder):
                 os.makedirs(self.jars_folder)
-
             files = [file for file in os.listdir(self.jars_folder) if file.endswith(".jar")]
             self.json_data = [{"file_name": file, "status": "Pending", "notes": ""} for file in files]
-
             with open("output.json", "w") as f:
                 json.dump(self.json_data, f, indent=4)
-
             self.log_feedback("JSON file 'output.json' generated successfully!")
             self.load_table()
         except Exception as e:
@@ -157,35 +185,32 @@ class CustomApp:
         """Loads the JSON data into the table and colors the status."""
         for row in self.table.get_children():
             self.table.delete(row)
-
         for index, item in enumerate(self.json_data):
             status_color = ""
             if item["status"] == "Pass":
                 status_color = "green"
             elif item["status"] == "Fail":
                 status_color = "red"
-            elif index == self.current_test_index:  # Highlight current test in purple
+            elif index == self.current_test_index:
                 status_color = "purple"
-
-            # Insert item into the table with appropriate color for status
             self.table.insert("", "end", values=(item["file_name"], item["status"], item["notes"]),
                               tags=(status_color,))
-
-        # Apply colors to the "Status" column
         self.table.tag_configure("green", background="lightgreen")
         self.table.tag_configure("red", background="lightcoral")
-        self.table.tag_configure("purple", background="lavender")  # Add purple highlight
+        self.table.tag_configure("purple", background="lavender")
         self.update_progress()
 
-    def start_test(self):
-        """Prepares the test folder for testing."""
+    def start_server(self):
+        """Starts the server by running the batch file in the test folder using threading."""
         try:
-            if os.path.exists(self.test_folder):
-                shutil.rmtree(self.test_folder)
-            os.makedirs(self.test_folder)
+            bat_file = os.path.join(self.test_folder, "run.bat")
 
-            self.current_test_index = 0
-            self.copy_to_test_folder()  # Move the copying logic here
+            if not os.path.exists(bat_file):
+                self.log_feedback("Error: run.bat file not found in the test folder.")
+                return
+            self.start_server_button.config(bg=self.button_color_start_server_running, text="Server Running")
+            thread = threading.Thread(target=self.run_batch_file, args=("run.bat",))
+            thread.start()
 
         except Exception as e:
             self.log_feedback(f"Error: {e}")
@@ -196,20 +221,13 @@ class CustomApp:
             if 0 <= self.current_test_index < len(self.json_data):
                 jar_file = self.json_data[self.current_test_index]["file_name"]
                 jar_path = os.path.join(self.jars_folder, jar_file)
-
-                # Copy the jar file to the test folder
                 shutil.copy(jar_path, self.test_folder)
                 self.log_feedback(f"Copied {jar_file} to the test folder.")
-
-                # Create the run.bat file
                 bat_file = os.path.join(self.test_folder, "run.bat")
                 with open(bat_file, 'w') as bat:
                     bat.write(f"@echo off\n")
-                    bat.write(f"java -Xmx1G -jar {jar_file}\n")
-
+                    bat.write(f"java -Xmx1G -jar {jar_file}")
                 self.log_feedback(f"run.bat file created for {jar_file}.")
-
-                # Copy the contents of the configs folder to the test folder
                 if os.path.exists(self.configs_folder):
                     for item in os.listdir(self.configs_folder):
                         s = os.path.join(self.configs_folder, item)
@@ -222,25 +240,20 @@ class CustomApp:
                 else:
                     self.log_feedback("Configs folder not found. Skipping copy.")
 
-
         except Exception as e:
             self.log_feedback(f"Error: {e}")
 
-    def start_server(self):
-        """Starts the server by running the batch file in the test folder using threading."""
+    def start_test(self):
+        """Prepares the test folder for testing."""
         try:
-            bat_file = os.path.join(self.test_folder, "run.bat")
-
-            if not os.path.exists(bat_file):
-                self.log_feedback("Error: run.bat file not found in the test folder.")
-                return
-
-            # Create a new thread to run the batch file
-            thread = threading.Thread(target=self.run_batch_file, args=("run.bat",))
-            thread.start()
-
+            if os.path.exists(self.test_folder):
+                shutil.rmtree(self.test_folder)
+            os.makedirs(self.test_folder)
+            self.current_test_index = 0
+            self.copy_to_test_folder()
+            self.log_feedback("Test folder prepared for testing.")
         except Exception as e:
-            self.log_feedback(f"Error: {e}")
+            self.log_feedback(f"Error in start_test: {e}")
 
     def update_progress(self):
         """Updates the progress bar and label based on test statuses."""
@@ -248,20 +261,14 @@ class CustomApp:
             self.progress_bar["value"] = 0
             self.progress_label.config(text="Progress: 0%")
             return
-
         total_tests = len(self.json_data)
         completed_tests = sum(1 for test in self.json_data if test["status"] in ["Pass", "Fail"])
         progress_percentage = int((completed_tests / total_tests) * 100)
-
         self.progress_bar["value"] = progress_percentage
         self.progress_label.config(text=f"Progress: {progress_percentage}%")
-        
     def run_batch_file(self, bat_file_name):
         """Runs the batch file in a separate thread."""
         try:
-            bat_file_path = os.path.join(self.test_folder, bat_file_name)
-
-            # Run the .bat file using subprocess (we won't capture output)
             self.server_process = subprocess.Popen(
                 ['cmd', '/c', bat_file_name], cwd=self.test_folder
             )
@@ -275,10 +282,8 @@ class CustomApp:
             if 0 <= self.current_test_index < len(self.json_data):
                 self.json_data[self.current_test_index]["status"] = self.pass_fail_var.get()
                 self.json_data[self.current_test_index]["notes"] = self.notes_entry.get()
-
                 with open("output.json", "w") as f:
                     json.dump(self.json_data, f, indent=4)
-
                 self.load_table()
                 self.log_feedback("Status and notes updated successfully.")
             else:
@@ -291,43 +296,34 @@ class CustomApp:
     def next_test(self):
         """Prepares the next test by killing the server (if running) and starting the next test."""
         try:
-            # Kill the currently running server
             self.kill_server()
-
-            # Find the next test with status "Pending"
             for _ in range(len(self.json_data)):
-                # Increment test index and wrap around if necessary
                 self.current_test_index = (self.current_test_index + 1) % len(self.json_data)
                 current_test = self.json_data[self.current_test_index]
-
                 if current_test["status"] == "Pending":
-                    # Clear the test folder
                     if os.path.exists(self.test_folder):
                         shutil.rmtree(self.test_folder)
                     os.makedirs(self.test_folder)
-
-                    # Copy the JAR file and other necessary files to the test folder
                     self.copy_to_test_folder()
-
                     return
-
-            # If no pending tests are found, notify the user
             self.log_feedback("No pending tests found. All tests are complete.")
-
         except Exception as e:
             self.log_feedback(f"Error: {e}")
+
 
     def kill_server(self):
         """Kills the running Minecraft server process."""
         if self.server_process:
             try:
-                self.server_process.terminate()  # Kill the process
+                self.server_process.terminate()
                 self.log_feedback("Minecraft server killed successfully.")
                 self.server_process = None
+                self.start_server_button.config(bg=self.button_color_start_server, text="Start Server")
             except Exception as e:
                 self.log_feedback(f"Error while killing the server: {e}")
         else:
             self.log_feedback("No server process is currently running.")
+            self.start_server_button.config(bg=self.button_color_start_server, text="Start Server")
 
     def generate_log(self):
         """Generates a text log and saves it to a file."""
